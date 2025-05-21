@@ -4,6 +4,8 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.AddSqlServerDbContext<OnlineShopContext>(connectionName: "OnlineShop");
+
 var app = builder.Build();
 app.MapDefaultEndpoints();
 
@@ -21,6 +23,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
     name: "default",
