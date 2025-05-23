@@ -3,6 +3,7 @@
 public partial class OnlineShopContext(DbContextOptions<OnlineShopContext> options) : DbContext(options)
 {
     public virtual DbSet<Menu> Menus { get; set; }
+    public virtual DbSet<Banner> Banners { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -11,6 +12,14 @@ public partial class OnlineShopContext(DbContextOptions<OnlineShopContext> optio
             entity.Property(e => e.Link).HasMaxLength(300).IsRequired();
             entity.Property(e => e.MenuTitle).HasMaxLength(50).IsRequired();
             entity.Property(e => e.Type).HasMaxLength(20).IsRequired();
+        });
+        modelBuilder.Entity<Banner>(entity =>
+        {
+            entity.Property(e => e.Title).HasMaxLength(200);
+            entity.Property(e => e.SubTitle).HasMaxLength(1000);
+            entity.Property(e => e.ImageName).HasMaxLength(50);
+            entity.Property(e => e.Link).HasMaxLength(100);
+            entity.Property(e => e.Position).HasMaxLength(50);
         });
     }
 }
