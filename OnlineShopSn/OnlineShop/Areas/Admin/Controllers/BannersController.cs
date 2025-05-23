@@ -80,7 +80,7 @@ namespace OnlineShop.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,SubTitle,ImageName,Priority,Link,Position")] Banner banner)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,SubTitle,ImageName,Priority,Link,Position")] Banner banner, IFormFile? ImageFile)
         {
             if (id != banner.Id)
             {
@@ -91,6 +91,16 @@ namespace OnlineShop.Areas.Admin
             {
                 try
                 {
+                    if (ImageFile != null)
+                    {
+                        string originalFileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "banners", banner.ImageName!);
+                        if (System.IO.File.Exists(originalFileName)) System.IO.File.Delete(originalFileName);
+                        banner.ImageName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+                        string ImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "banners", banner.ImageName);
+
+                        using var stream = new FileStream(ImagePath, FileMode.Create);
+                        ImageFile.CopyTo(stream);
+                    }
                     context.Update(banner);
                     await context.SaveChangesAsync();
                 }
@@ -136,6 +146,8 @@ namespace OnlineShop.Areas.Admin
             var banner = await context.Banners.FindAsync(id);
             if (banner != null)
             {
+                string originalFileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "banners", banner.ImageName!);
+                if (System.IO.File.Exists(originalFileName)) System.IO.File.Delete(originalFileName);
                 context.Banners.Remove(banner);
             }
 

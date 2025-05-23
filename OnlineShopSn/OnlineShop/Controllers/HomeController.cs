@@ -4,17 +4,13 @@ using OnlineShop.Models;
 
 namespace OnlineShop.Controllers;
 
-public class HomeController : Controller
+public class HomeController(ILogger<HomeController> logger, OnlineShopContext context) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public async Task<IActionResult> Index()
     {
-        _logger = logger;
-    }
-
-    public IActionResult Index()
-    {
+        var banners = await context.Banners.ToListAsync();
+        if (banners == null) logger.LogError("No banners");
+        ViewData["banners"] = banners;
         return View();
     }
 
