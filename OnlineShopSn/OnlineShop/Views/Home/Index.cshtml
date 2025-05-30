@@ -94,21 +94,24 @@
                 <h2>featured collections</h2>
             </div>
             <div class="banner_container d-flex">
-                <figure class="single_banner position-relative mr-30">
-                    <img src="assets/img/bg/bg1.jpg" alt="">
-                    <figcaption class="banner_text position-absolute">
-                        <h3>Zara Pattern <br> backpacks</h3>
-                        <p>Stretch, fresh-cool help you alway <br> comfortable</p>
-                        <a class="btn btn-primary" href="shop.html">Shop Now</a>
-                    </figcaption>
-                </figure>
-                <figure class="single_banner position-relative">
-                    <img src="assets/img/bg/bg2.jpg" alt="">
-                    <figcaption class="banner_text position-absolute">
-                        <h3 class="text-white">Basic Color Caps</h3>
-                        <p class="text-white">Minimalist never cool, choose and make <br> the simple great again!</p>
-                    </figcaption>
-                </figure>
+                @if(banners!=null)
+                {
+                    var bannerList = banners.Where(x=>x.Position=="Banner1").OrderBy(x=>x.Priority).ToList();
+                    foreach (var banner1 in bannerList)
+                    {
+                        <figure class="single_banner position-relative mr-30">
+                        <img src="/images/banners/@banner1.ImageName" alt="@banner1.ImageName">
+                        <figcaption class="banner_text position-absolute">
+                            <h3>@banner1.Title</h3>
+                            <p>@banner1.SubTitle</p>
+                            @if (!string.IsNullOrEmpty(banner1.Link))
+                            {
+                                <a class="btn btn-primary" href="shop.html">Shop Now</a>
+                            }
+                        </figcaption>
+                        </figure>
+                    }
+                }
             </div>
         </div>
     </section>
@@ -1797,28 +1800,26 @@
     <section class="banner_section banner_style2 mb-109">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <figure class="single_banner position-relative">
-                        <img src="assets/img/bg/bg3.jpg" alt="">
-                        <div class="banner_text position-absolute">
-                            <h3>Minimalist <br> sneaker</h3>
-                            <p>Stretch, fresh-cool help you alway <br> comfortable</p>
-                            <a class="btn btn-primary" href="shop.html">Shop Now</a>
+                @if (banners != null)
+                {
+                    var bannerList = banners.Where(x=>x.Position=="Banner2").OrderBy(x=>x.Priority).ToList();
+                    foreach (var banner2 in bannerList)
+                    {
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <figure class="single_banner position-relative">
+                                <img src="/images/banners/@banner2.ImageName" alt="@banner2.ImageName">
+                                <div class="banner_text position-absolute">
+                                    <h3>@banner2.Title</h3>
+                                    <p>@banner2.SubTitle</p>
+                                    @if (!string.IsNullOrEmpty(banner2.Link))
+                                    {
+                                        <a class="btn btn-primary" href="@banner2.Link">Shop Now</a>
+                                    }
+                                </div> 
+                            </figure>
                         </div>
-                       
-                    </figure>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <figure class="single_banner position-relative">
-                        <img src="assets/img/bg/bg4.jpg" alt="">
-                        <div class="banner_text position-absolute text__style2">
-                            <h3><span>50%</span> OFF <br> for Autumn</h3>
-                            <p>Stretch, fresh-cool help you alway <br> comfortable</p>
-                            <a class="btn btn-primary" href="shop.html">Shop Now</a>
-                        </div>
-                       
-                    </figure>
-                </div>
+                    }
+                }
             </div>
         </div>
     </section>
