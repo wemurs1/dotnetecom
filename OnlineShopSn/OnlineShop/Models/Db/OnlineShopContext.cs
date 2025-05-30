@@ -5,6 +5,7 @@ public partial class OnlineShopContext(DbContextOptions<OnlineShopContext> optio
     public virtual DbSet<Menu> Menus { get; set; }
     public virtual DbSet<Banner> Banners { get; set; }
     public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<ProductGallery> ProductGalleries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,6 +33,10 @@ public partial class OnlineShopContext(DbContextOptions<OnlineShopContext> optio
             entity.Property(e => e.VideoUrl).HasMaxLength(300);
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.Discount).HasColumnType("money");
+        });
+        modelBuilder.Entity<ProductGallery>(entity =>
+        {
+            entity.Property(e => e.ImageName).HasMaxLength(50);
         });
     }
 }
