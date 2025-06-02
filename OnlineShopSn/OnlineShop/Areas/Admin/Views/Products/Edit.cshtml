@@ -49,11 +49,10 @@
                 <input type="file" name="GalleryImages" multiple class="form-control">
                 <br />
                 @{
-                    var galleries = ViewData["gallery"] as List<OnlineShop.Models.Db.ProductGallery>;
                     <div class="row">
-                        @if (galleries != null)
+                        @if (Model.Gallery != null)
                         {
-                            foreach (var gallery in galleries)
+                            foreach (var gallery in Model.Gallery)
                             {
                                 <div class="col-md-3 col-12" id="@gallery.Id">
                                     <img src="/images/products/@gallery.ImageName" class="img-thumbnail" />

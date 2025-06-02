@@ -83,12 +83,11 @@ namespace OnlineShop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var product = await context.Products.FindAsync(id);
+            var product = await context.Products.Include(x => x.Gallery).FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["gallery"] = await context.ProductGalleries.Where(x => x.ProductId == product.Id).ToListAsync();
             return View(product);
         }
 
