@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace OnlineShop.Areas.Admin
 {
     [Area("Admin")]

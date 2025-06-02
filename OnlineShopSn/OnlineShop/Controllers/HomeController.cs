@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Models;
 
 namespace OnlineShop.Controllers;
 
