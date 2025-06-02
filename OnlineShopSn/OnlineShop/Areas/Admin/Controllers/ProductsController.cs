@@ -172,9 +172,19 @@ namespace OnlineShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await context.Products.Include(x => x.Gallery).FirstOrDefaultAsync(x => x.Id == id);
             if (product != null)
             {
+                string mainImage = GetFullFileName(product.ImageName!);
+                if (System.IO.File.Exists(mainImage)) System.IO.File.Delete(mainImage);
+                if (product.Gallery != null)
+                {
+                    foreach (var item in product.Gallery)
+                    {
+                        string galleryImagePath = GetFullFileName(item.ImageName!);
+                        if (System.IO.File.Exists(galleryImagePath)) System.IO.File.Delete(galleryImagePath);
+                    }
+                }
                 context.Products.Remove(product);
             }
 
