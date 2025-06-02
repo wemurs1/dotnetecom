@@ -88,6 +88,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            ViewData["gallery"] = await context.ProductGalleries.Where(x => x.ProductId == product.Id).ToListAsync();
             return View(product);
         }
 
